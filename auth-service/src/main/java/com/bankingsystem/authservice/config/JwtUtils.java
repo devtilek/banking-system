@@ -13,16 +13,16 @@ import java.util.Date;
 @Component
 public class JwtUtils {
 
-    @Value("${JWT_SECRET}")
+    @Value("${jwt.secret}")
     private String secret;
 
-    @Value("${JWT_ACCESS_TOKEN_TTL_MS}")
+    @Value("${jwt.expiration}")
     private long accessTokenTtlMs;
 
     public String generateToken(UserCredential user) {
         return Jwts.builder()
                 .subject(user.getId().toString())
-                .claim("role", user.getRole().getRoleName())
+                .claim("role", user.getRole().name())
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() +
                         accessTokenTtlMs))
